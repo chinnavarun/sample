@@ -1,0 +1,46 @@
+[
+  {
+    "employeeID": 1,
+    "employeeName": "Tiger Nixon",
+    "employeeApprYear": "2020 - 2021",
+    "employeeApprPerc": 20,
+    "employeeExp": 42,
+    "employeeSalary": 150000,
+    "employeeRevisedSalary": 180000,
+    "employeeDesignation": "Manager",
+    "employeeAge": "61"
+  },
+  {
+    "employeeID": 2,
+    "employeeName": "Garrett Winters",
+    "employeeApprYear": "2020 - 2021",
+    "employeeApprPerc": 21,
+    "employeeExp": 44,
+    "employeeSalary": 160000,
+    "employeeRevisedSalary": 193600,
+    "employeeDesignation": "Manager",
+    "employeeAge": "63"
+  },
+  {
+    "employeeID": 3,
+    "employeeName": "Ashton Cox",
+    "employeeApprYear": "2020 - 2021",
+    "employeeApprPerc": 22,
+    "employeeExp": 47,
+    "employeeSalary": 160000,
+    "employeeRevisedSalary": 195200,
+    "employeeDesignation": "Manager",
+    "employeeAge": "66"
+  },
+  {
+    "employeeID": 4,
+    "employeeName": "Cedric Kelly",
+    "employeeApprYear": "2020 - 2021",
+    "employeeApprPerc": 25,
+    "employeeExp": 3,
+    "employeeSalary": 100000,
+    "employeeRevisedSalary": 125000,
+    "employeeDesignation": "Software Engineer",
+    "employeeAge": "22"
+  }
+]

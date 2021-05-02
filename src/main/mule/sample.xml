@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="0760764e-ba98-4fa2-b2b3-cdf8c5543e26" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<db:config name="Database_Config" doc:name="Database Config" doc:id="3a678cf6-1199-4028-bad3-46357084e935" >
+		<db:my-sql-connection host="localhost" port="3306" user="root" password="1234" />
+	</db:config>
+	<flow name="sampleFlow" doc:id="35fac5d6-43ab-4d2a-a38a-f71bf1231d2a" >
+		<http:listener doc:name="Listener" doc:id="d58a2539-3524-445d-83af-dbd1d6cd3763" config-ref="HTTP_Listener_config" path="employees"/>
+		<logger level="INFO" doc:name="Start Log" doc:id="04185305-eba1-477c-b3dd-7e39647074eb" message="Started fetch employee flow"/>
+		<db:select doc:name="Select" doc:id="def7177e-bd5c-487d-99b8-98d222f708b7" config-ref="Database_Config">
+			<db:sql ><![CDATA[select mas.emp_id, mas.emp_name, fin.emp_exp, fin.emp_salary, fin.emp_desg, fin.emp_age, appr.emp_appr_year, appr.emp_appr_per from onboard.emp_fin_master fin, onboard.emp_master mas, onboard.emp_appr_master appr where fin.emp_id = mas.emp_id and appr.emp_id = mas.emp_id
+]]></db:sql>
+		</db:select>
+		<ee:transform doc:name="Transform Message" doc:id="61c48551-e4d2-4eb5-9d19-5c4ddf91585e" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload map {
+	"employeeID": $.emp_id,
+	"employeeName": $.emp_name,
+	"employeeApprYear": $.emp_appr_year,
+	"employeeApprPerc": $.emp_appr_per,
+	"employeeExp": $.emp_exp,
+	"employeeSalary": $.emp_salary,
+	"employeeRevisedSalary":round(($.emp_salary) + ($.emp_salary * $.emp_appr_per)/100),
+	"employeeDesignation": $.emp_desg,
+	"employeeAge": $.emp_age
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="End Log" doc:id="ecc41067-e055-4f0d-9877-4f051e060503" message='#["Completed employees fetch flow success"]' />
+	</flow>
+</mule>
