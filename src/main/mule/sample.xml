@@ -37,6 +37,6 @@ payload map {
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<logger level="INFO" doc:name="End Log" doc:id="ecc41067-e055-4f0d-9877-4f051e060503" message='#["Completed employees fetch flow"]' />
+		<logger level="INFO" doc:name="End Log" doc:id="ecc41067-e055-4f0d-9877-4f051e060503" message='#["Completed employees fetch flow success"]' />
 	</flow>
 </mule>
